@@ -1,24 +1,33 @@
-const express = require('express')
-const dotenv = require('dotenv')
-const mongoose = require('mongoose')
+const express = require('express');
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 
-const designs = require('./routes/designs')
+const designs = require('./routes/designs'); // Route file for design-related APIs
 
-dotenv.config()  
+dotenv.config();
 
 const app = express();
 const PORT = 8000;
+
+// Middleware to parse JSON
 app.use(express.json());
-app.use('/user', designs);
 
-mongoose.connect(process.env.MONGO_URI)
-.then(()=>{
-    console.log(`Database connected successfully`)
+// Routes
+app.use('/api/designs', designs);
 
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
-.catch((err)=>{
-    console.log({'message': err.message})
+.then(() => {
+  console.log('Database connected successfully');
 })
-app.listen(PORT,()=>{
-    console.log(`Server is running at port: ${PORT}`)
-})
+.catch((err) => {
+  console.log({ message: err.message });
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running at port: ${PORT}`);
+});
