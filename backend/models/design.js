@@ -23,4 +23,4 @@ const designSchema=new mongoose.Schema({
     }
 })
 
-module.exports=designSchema
+module.exports = mongoose.model('Design', designSchema);
