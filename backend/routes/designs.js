@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Design = require('../models/design');
 
-// GET all designs
+// GET all designs with creator info
 router.get('/', async (req, res) => {
   try {
-    const designs = await Design.find();
+    const designs = await Design.find().populate('creator', 'username email'); // 👈 shows username & email
     res.status(200).json(designs);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -15,7 +15,17 @@ router.get('/', async (req, res) => {
 // POST a new design
 router.post('/', async (req, res) => {
   try {
-    const newDesign = new Design(req.body);
+    const { title, imageURL, description, category, materialInfo, creator } = req.body;
+
+    const newDesign = new Design({
+      title,
+      imageURL,
+      description,
+      category,
+      materialInfo,
+      creator, // 👈 expects a valid user ID
+    });
+
     const savedDesign = await newDesign.save();
     res.status(201).json(savedDesign);
   } catch (err) {
@@ -23,7 +33,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// ✅ PUT method to update a design by ID
+// PUT method to update a design by ID
 router.put('/:id', async (req, res) => {
   try {
     const updatedDesign = await Design.findByIdAndUpdate(
