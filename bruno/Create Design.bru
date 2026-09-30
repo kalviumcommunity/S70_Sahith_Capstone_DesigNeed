@@ -1,0 +1,26 @@
+﻿meta {
+  name: Create Design
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/designs
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "Urban Streetwear Oversized Hoodie",
+    "imageURL": "https://example.com/images/hoodie.jpg",
+    "description": "Heavyweight premium cotton oversized hoodie with graphic print.",
+    "category": "streetWear",
+    "materialInfo": "100% French Terry Cotton",
+    "creator": "685c4e6263b9aa8921b39738"
+  }
+}

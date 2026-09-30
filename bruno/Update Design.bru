@@ -1,0 +1,23 @@
+﻿meta {
+  name: Update Design
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/api/designs/685c4e6263b9aa8921b39739
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "Autumn Vibe - Updated",
+    "description": "A cozy, layered fall collection with premium wool accents.",
+    "materialInfo": "Organic cotton and wool blend"
+  }
+}
